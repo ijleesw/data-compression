@@ -54,5 +54,10 @@ int main(int argc, char** argv)
 	cout << argv[1]<<": "<<o_length<<" -> "<<c_length<<" ("<<fixed<<setprecision(5)<<ratio<<":1)\n";
 	if (!is_same) cout << "   Error: decompressed file not identical to the original file.\n";
 
+
+	delete original;
+	delete compressed;
+	delete decompressed;
+
 	return 0;
 }
