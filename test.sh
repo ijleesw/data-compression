@@ -1,6 +1,10 @@
 echo "Building executables"
 echo ""
+rm result/tunstall/*
+rm result/golomb/*
+rm result/arithmetic/*
 make
+
 
 echo "Running Tunstall Coding Compression/Decompression"
 ./tunstall data/SD1 result/tunstall/SD1_compressed result/tunstall/SD1_decompressed
