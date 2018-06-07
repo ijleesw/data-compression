@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <string.h>
 #include "readfile.hpp"
 typedef unsigned char uchar;
 using namespace std;
@@ -14,14 +15,16 @@ int main(int argc, char** argv)
 	long d_length;
 	double ratio;
 	bool is_same = true;
+	bool skip = false;
 	string result;
 
 
 	if (argc != 5) {
 		cout << "Usage: "<<argv[0];
-		cout << " <data name> <original file path> <compressed file path> <decompressed file path>\n";
+		cout << " <data name> <original file path> <compressed file path> <decompressed file path (or -skip)>\n";
 		return -1;
 	}
+	if (strcmp(argv[4], "-skip") == 0) skip = true;
 
 	cout << argv[1] << ": ";
 
@@ -33,23 +36,25 @@ int main(int argc, char** argv)
 		perror("File open error");
 		return -1;
 	}
-	if (!readbyte2buf(argv[4], decompressed, &d_length)) {
-		perror("File open error");
-		return -1;
-	}
-
 
 	ratio = (double)o_length/c_length;
 
-	if (o_length != d_length) is_same = false;
-
-	if (is_same) {
-	for (long i = 0; i < o_length; i++) {
-		if (original[i] != decompressed[i]) {
-			is_same = false;
-			break;
+	if (!skip){
+		if (!readbyte2buf(argv[4], decompressed, &d_length)) {
+			perror("File open error");
+			return -1;
 		}
-	}
+
+		if (o_length != d_length) is_same = false;
+
+		if (is_same) {
+		for (long i = 0; i < o_length; i++) {
+			if (original[i] != decompressed[i]) {
+				is_same = false;
+				break;
+			}
+		}
+		}
 	}
 
 	if (is_same) cout <<o_length<<" -> "<<c_length<<" ("<<fixed<<setprecision(5)<<ratio<<":1)\n";
@@ -58,7 +63,7 @@ int main(int argc, char** argv)
 
 	delete original;
 	delete compressed;
-	delete decompressed;
+	if (!skip) delete decompressed;
 
 	return 0;
 }

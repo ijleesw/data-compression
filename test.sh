@@ -1,8 +1,14 @@
 echo "Building executables"
 echo ""
-rm result/tunstall/*
-rm result/golomb/*
-rm result/arithmetic/*
+stty -echo
+rm result/tunstall/* > /dev/null 2>&1
+rm result/golomb/* > /dev/null 2>&1
+rm result/arithmetic/* > /dev/null 2>&1
+rm result/gzip/* > /dev/null 2>&1
+rm result/bzip2/* > /dev/null 2>&1
+rm result/xz/* > /dev/null 2>&1
+stty echo
+make clean
 make
 
 
@@ -34,6 +40,60 @@ echo "Running Arithmetic Coding Compression/Decompression"
 ./arithmetic data/dnaby result/arithmetic/dnaby_compressed result/arithmetic/dnaby_decompressed
 ./arithmetic data/englishby result/arithmetic/englishby_compressed result/arithmetic/englishby_decompressed
 ./arithmetic data/xmlby result/arithmetic/xmlby_compressed result/arithmetic/xmlby_decompressed
+
+
+echo "Running Unix gzip"
+cp data/SD1 result/gzip/SD1_compressed
+cp data/SD2 result/gzip/SD2_compressed
+cp data/SD3 result/gzip/SD3_compressed
+cp data/SD4 result/gzip/SD4_compressed
+cp data/dnaby result/gzip/dnaby_compressed
+cp data/englishby result/gzip/englishby_compressed
+cp data/xmlby result/gzip/xmlby_compressed
+
+gzip result/gzip/SD1_compressed
+gzip result/gzip/SD2_compressed
+gzip result/gzip/SD3_compressed
+gzip result/gzip/SD4_compressed
+gzip result/gzip/dnaby_compressed
+gzip result/gzip/englishby_compressed
+gzip result/gzip/xmlby_compressed
+
+
+echo "Running Unix bzip2"
+cp data/SD1 result/bzip2/SD1_compressed
+cp data/SD2 result/bzip2/SD2_compressed
+cp data/SD3 result/bzip2/SD3_compressed
+cp data/SD4 result/bzip2/SD4_compressed
+cp data/dnaby result/bzip2/dnaby_compressed
+cp data/englishby result/bzip2/englishby_compressed
+cp data/xmlby result/bzip2/xmlby_compressed
+
+bzip2 result/bzip2/SD1_compressed
+bzip2 result/bzip2/SD2_compressed
+bzip2 result/bzip2/SD3_compressed
+bzip2 result/bzip2/SD4_compressed
+bzip2 result/bzip2/dnaby_compressed
+bzip2 result/bzip2/englishby_compressed
+bzip2 result/bzip2/xmlby_compressed
+
+
+echo "Running Unix xz"
+cp data/SD1 result/xz/SD1_compressed
+cp data/SD2 result/xz/SD2_compressed
+cp data/SD3 result/xz/SD3_compressed
+cp data/SD4 result/xz/SD4_compressed
+cp data/dnaby result/xz/dnaby_compressed
+cp data/englishby result/xz/englishby_compressed
+cp data/xmlby result/xz/xmlby_compressed
+
+xz result/xz/SD1_compressed
+xz result/xz/SD2_compressed
+xz result/xz/SD3_compressed
+xz result/xz/SD4_compressed
+xz result/xz/dnaby_compressed
+xz result/xz/englishby_compressed
+xz result/xz/xmlby_compressed
 echo ""
 
 
@@ -70,6 +130,39 @@ echo "Compression Ratio of Arithmetic Coding"
 ./checker dnaby data/dnaby result/arithmetic/dnaby_compressed result/arithmetic/dnaby_decompressed
 ./checker englishby data/englishby result/arithmetic/englishby_compressed result/arithmetic/englishby_decompressed
 ./checker xmlby data/xmlby result/arithmetic/xmlby_compressed result/arithmetic/xmlby_decompressed
+echo ""
+
+
+echo "Compression Ratio of gzip"
+./checker SD1 data/SD1 result/gzip/SD1_compressed.gz -skip
+./checker SD2 data/SD2 result/gzip/SD2_compressed.gz -skip
+./checker SD3 data/SD3 result/gzip/SD3_compressed.gz -skip
+./checker SD4 data/SD4 result/gzip/SD4_compressed.gz -skip
+./checker dnaby data/dnaby result/gzip/dnaby_compressed.gz -skip
+./checker englishby data/englishby result/gzip/englishby_compressed.gz -skip
+./checker xmlby data/xmlby result/gzip/xmlby_compressed.gz -skip
+echo ""
+
+
+echo "Compression Ratio of bzip2"
+./checker SD1 data/SD1 result/bzip2/SD1_compressed.bz2 -skip
+./checker SD2 data/SD2 result/bzip2/SD2_compressed.bz2 -skip
+./checker SD3 data/SD3 result/bzip2/SD3_compressed.bz2 -skip
+./checker SD4 data/SD4 result/bzip2/SD4_compressed.bz2 -skip
+./checker dnaby data/dnaby result/bzip2/dnaby_compressed.bz2 -skip
+./checker englishby data/englishby result/bzip2/englishby_compressed.bz2 -skip
+./checker xmlby data/xmlby result/bzip2/xmlby_compressed.bz2 -skip
+echo ""
+
+
+echo "Compression Ratio of xz"
+./checker SD1 data/SD1 result/xz/SD1_compressed.xz -skip
+./checker SD2 data/SD2 result/xz/SD2_compressed.xz -skip
+./checker SD3 data/SD3 result/xz/SD3_compressed.xz -skip
+./checker SD4 data/SD4 result/xz/SD4_compressed.xz -skip
+./checker dnaby data/dnaby result/xz/dnaby_compressed.xz -skip
+./checker englishby data/englishby result/xz/englishby_compressed.xz -skip
+./checker xmlby data/xmlby result/xz/xmlby_compressed.xz -skip
 echo ""
 
 
