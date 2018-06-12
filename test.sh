@@ -12,7 +12,7 @@ make clean
 make
 
 
-echo "Running Tunstall Coding Compression/Decompression"
+echo "Running Tunstall Code Compression/Decompression"
 ./tunstall data/SD1 result/tunstall/SD1_compressed result/tunstall/SD1_decompressed
 ./tunstall data/SD2 result/tunstall/SD2_compressed result/tunstall/SD2_decompressed
 ./tunstall data/SD3 result/tunstall/SD3_compressed result/tunstall/SD3_decompressed
@@ -22,7 +22,7 @@ echo "Running Tunstall Coding Compression/Decompression"
 ./tunstall data/xmlby result/tunstall/xmlby_compressed result/tunstall/xmlby_decompressed
 
 
-echo "Running Golomb Coding Compression/Decompression"
+echo "Running Golomb Code Compression/Decompression"
 ./golomb data/SD1 result/golomb/SD1_compressed result/golomb/SD1_decompressed
 ./golomb data/SD2 result/golomb/SD2_compressed result/golomb/SD2_decompressed
 ./golomb data/SD3 result/golomb/SD3_compressed result/golomb/SD3_decompressed
@@ -100,7 +100,7 @@ echo ""
 # How to use checker:
 # Add ./checker <data name> <original file path> <compressed file path> <decompressed file path>
 
-echo "Compression Ratio of Tunstall Coding"
+echo "Compression Ratio of Tunstall Code"
 ./checker SD1 data/SD1 result/tunstall/SD1_compressed result/tunstall/SD1_decompressed
 ./checker SD2 data/SD2 result/tunstall/SD2_compressed result/tunstall/SD2_decompressed
 ./checker SD3 data/SD3 result/tunstall/SD3_compressed result/tunstall/SD3_decompressed
@@ -111,7 +111,7 @@ echo "Compression Ratio of Tunstall Coding"
 echo ""
 
 
-echo "Compression Ratio of Golomb Coding"
+echo "Compression Ratio of Golomb Code"
 ./checker SD1 data/SD1 result/golomb/SD1_compressed result/golomb/SD1_decompressed
 ./checker SD2 data/SD2 result/golomb/SD2_compressed result/golomb/SD2_decompressed
 ./checker SD3 data/SD3 result/golomb/SD3_compressed result/golomb/SD3_decompressed
