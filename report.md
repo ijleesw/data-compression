@@ -42,7 +42,7 @@ _p_ 가 커서 _m_ 값도 커져야 압축이 되기 시작하는 걸 확인할 
 
 
 
-##3. Tunstall Code
+## 3. Tunstall Code
 
 ### 3-1. Review of algorithms
 
