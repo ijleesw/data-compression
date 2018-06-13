@@ -1,15 +1,21 @@
 #include <iostream>
+#include <cstdio>
 #include <iomanip>
 #include <string.h>
+#include <set>
 #include "readfile.hpp"
 typedef unsigned char uchar;
 using namespace std;
+
+int symbol_counter(uchar*);
 
 int main(int argc, char** argv)
 {
 	uchar* original;
 	uchar* compressed;
 	uchar* decompressed;
+	int o_numofsymbols;
+	int c_numofsymbols;
 	long o_length;
 	long c_length;
 	long d_length;
@@ -37,6 +43,9 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
+	o_numofsymbols = symbol_counter(original);
+	c_numofsymbols = symbol_counter(compressed);
+
 	ratio = (double)o_length/c_length;
 
 	if (!skip){
@@ -57,7 +66,9 @@ int main(int argc, char** argv)
 		}
 	}
 
-	if (is_same) cout <<o_length<<" -> "<<c_length<<" ("<<fixed<<setprecision(5)<<ratio<<":1)\n";
+	if (is_same) {
+		printf("%d(%d) -> %d(%d) (%.5f:1)\n", (int)o_length, o_numofsymbols, (int)c_length, c_numofsymbols, ratio);
+	}
 	else cout << "decompressed file not identical to the original file.\n";
 
 
@@ -66,4 +77,12 @@ int main(int argc, char** argv)
 	if (!skip) delete decompressed;
 
 	return 0;
+}
+
+int symbol_counter(uchar* buf)
+{
+	set<uchar> s;
+	int cnt = 0;
+	while (buf[cnt] != '\0') s.insert(buf[cnt++]);
+	return s.size();
 }
