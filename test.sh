@@ -1,15 +1,32 @@
 echo "Building executables"
 echo ""
-stty -echo
+rm result/lz78/* > /dev/null 2>&1
 rm result/tunstall/* > /dev/null 2>&1
 rm result/golomb/* > /dev/null 2>&1
 rm result/arithmetic/* > /dev/null 2>&1
 rm result/gzip/* > /dev/null 2>&1
 rm result/bzip2/* > /dev/null 2>&1
 rm result/xz/* > /dev/null 2>&1
-stty echo
 make clean
 make
+
+
+echo "Running LZ78 Compression/Decompression"
+./lz78 -i data/SD1 -o result/lz78/SD1_compressed 
+./lz78 -i data/SD2 -o result/lz78/SD2_compressed 
+./lz78 -i data/SD3 -o result/lz78/SD3_compressed 
+./lz78 -i data/SD4 -o result/lz78/SD4_compressed 
+./lz78 -i data/dnaby -o result/lz78/dnaby_compressed 
+./lz78 -i data/englishby -o result/lz78/englishby_compressed 
+./lz78 -i data/xmlby -o result/lz78/xmlby_compressed 
+rm -r lz78.dSYM
+./lz78 -i result/lz78/SD1_compressed -o result/lz78/SD1_decompressed -d
+./lz78 -i result/lz78/SD2_compressed -o result/lz78/SD2_decompressed -d
+./lz78 -i result/lz78/SD3_compressed -o result/lz78/SD3_decompressed -d
+./lz78 -i result/lz78/SD4_compressed -o result/lz78/SD4_decompressed -d
+./lz78 -i result/lz78/dnaby_compressed -o result/lz78/dnaby_decompressed -d
+./lz78 -i result/lz78/englishby_compressed -o result/lz78/englishby_decompressed -d
+./lz78 -i result/lz78/xmlby_compressed -o result/lz78/xmlby_decompressed -d
 
 
 echo "Running Tunstall Code Compression/Decompression"
@@ -100,6 +117,16 @@ echo ""
 # How to use checker:
 # Add ./checker <data name> <original file path> <compressed file path> <decompressed file path>
 
+echo "Compression Ratio of LZ78"
+./checker SD1 data/SD1 result/lz78/SD1_compressed result/lz78/SD1_decompressed
+./checker SD2 data/SD2 result/lz78/SD2_compressed result/lz78/SD2_decompressed
+./checker SD3 data/SD3 result/lz78/SD3_compressed result/lz78/SD3_decompressed
+./checker SD4 data/SD4 result/lz78/SD4_compressed result/lz78/SD4_decompressed
+./checker dnaby data/dnaby result/lz78/dnaby_compressed result/lz78/dnaby_decompressed
+./checker englishby data/englishby result/lz78/englishby_compressed result/lz78/englishby_decompressed
+./checker xmlby data/xmlby result/lz78/xmlby_compressed result/lz78/xmlby_decompressed
+echo ""
+
 echo "Compression Ratio of Tunstall Code"
 ./checker SD1 data/SD1 result/tunstall/SD1_compressed result/tunstall/SD1_decompressed
 ./checker SD2 data/SD2 result/tunstall/SD2_compressed result/tunstall/SD2_decompressed
@@ -166,4 +193,6 @@ echo "Compression Ratio of xz"
 echo ""
 
 
+echo "Removing executables"
 make clean
+rm -r lz78.dSYM > /dev/null 2>&1
