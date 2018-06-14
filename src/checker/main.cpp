@@ -70,8 +70,9 @@ int main(int argc, char** argv)
 	}
 
 	if (is_same) {
-		printf("%ld(%ld) -> %ld(%ld)   Ratio: %.3f%% (%.3f%%)]\n",
-			    o_length, o_actual_length, c_length, c_actual_length, 100*ratio, (double)100*c_actual_length/o_actual_length);
+		printf("%ld(%ld, %d) -> %ld(%ld, %d)   Ratio: %.3f%% (%.3f%%)]\n",
+			    o_length, o_actual_length, o_numofsymbols, c_length, c_actual_length, c_numofsymbols,
+			    100*ratio, (double)100*c_actual_length/o_actual_length);
 	}
 	else cout << "decompressed file not identical to the original file.\n";
 
