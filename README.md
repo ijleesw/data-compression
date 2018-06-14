@@ -6,9 +6,9 @@ This is a team project of Topics on Algorithms (Data Compression) Spring 2018
 
 ## How to Run
 
-Type `./test.sh` in terminal.
+Run `test.sh` in terminal.
 
-If malloc error occurs in tunstall, just type `./test.sh` again.
+If malloc error occurs in tunstall, just run `test.sh` again.
 
 
 
