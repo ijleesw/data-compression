@@ -2,6 +2,8 @@
 
 This is a report for the Data Compression Class Project from the Topics on Algorithms Spring 2018 Class by Seok Won Lee and Chae Min Ahn.
 
+Repository: <https://github.com/ijleesw/data-compression>
+
 
 
 ## How to Run
@@ -19,11 +21,11 @@ The file `test.sh` will execute a comprehensive run of all algorithms and comput
 
 ### 1. Review of Algorithm
 
-Static Huffman scans the text content to calculate the frequency of each symbols, then builds a binary tree according to these frequencies. A parent node has a value equal to the sum of its children’s frequencies, and thus the root node has a value equal to the total frequency of all characters. Then each leaf node is represented with its path, as followed down from the root node, adding a ‘0’ for a left child and ‘1’ for a right child. 
+Static Huffman scans the text content to calculate the frequency of each symbols, then builds a binary tree according to these frequencies. A parent node has a value equal to the sum of its children’s frequencies, and thus the root node has a value equal to the total frequency of all characters. Then each leaf node is represented with its path, as followed down from the root node, adding a ‘0’ for a left child and ‘1’ for a right child.
 
 ### 2. Description of Code
 
-Static Huffman will execute a series of operations `s.make_frequency_dict()`,` s.make_heap()`, `s.merge_nodes()` and finally `s.make_codes()` to get the code representation of all symbols. 
+Static Huffman will execute a series of operations `s.make_frequency_dict()`,` s.make_heap()`, `s.merge_nodes()` and finally `s.make_codes()` to get the code representation of all symbols.
 
 
 
@@ -31,19 +33,19 @@ Static Huffman will execute a series of operations `s.make_frequency_dict()`,` s
 
 #### 1. Review of Algorithm
 
-Adaptive Huffman uses the same underlining idea, but builds the tree as each character is encountered. So instead of traversing the data twice, once for frequency calculation and once to convert each character to code, only one traversal is required. 
+Adaptive Huffman uses the same underlining idea, but builds the tree as each character is encountered. So instead of traversing the data twice, once for frequency calculation and once to convert each character to code, only one traversal is required.
 
 #### 2. Description of Code
 
 Each character `s` is passed onto `get_code(s)` to get current path representation of the character, then the tree is updated, which may result in `insert()` or `swap_node()`.
 
- 
+
 
 ## Golomb Code
 
 #### 1. Review of Algorithm
 
-Golomb code computes the probability _p_ of zeros over all bit stream. Then using the notation from the lecture slides _m_ is computed, and the quotient converted into unary representation. The remainder goes through the same process as on the page 22 on lecture 5 slides. 
+Golomb code computes the probability _p_ of zeros over all bit stream. Then using the notation from the lecture slides _m_ is computed, and the quotient converted into unary representation. The remainder goes through the same process as on the page 22 on lecture 5 slides.
 
 #### 2. Description of Code
 
@@ -55,7 +57,7 @@ The probability _p_ is computed using `num_set_bits()` in `golomb_encode()`. The
 
 #### 1. Review of Algorithm
 
-Given a symbol table and the probability of each symbols, the current leaf node with the highest probability is branched. This process is repeated until the number of leaf nodes exceed (2^k)-1, when using k-bit encoding. Then data is read from input source and corresponding lead node is returned. 
+Given a symbol table and the probability of each symbols, the current leaf node with the highest probability is branched. This process is repeated until the number of leaf nodes exceed (2^k)-1, when using k-bit encoding. Then data is read from input source and corresponding lead node is returned.
 
 #### 2. Description of Code
 
@@ -71,7 +73,7 @@ At each step interval [a, b) is divided according to each symbol’s probability
 
 #### 2. Description of Code
 
-Function `encode_BYTE` is in charge of whole compression process. Bytes are read until the end of input array, and `adaptive_model.encode_symbol` is run on each input. Within this function `adaptive_encoder.encode` takes place, which repeatedly divides 32 bit integers, sending each bit to `file_writer.send` to write on the output file. 
+Function `encode_BYTE` is in charge of whole compression process. Bytes are read until the end of input array, and `adaptive_model.encode_symbol` is run on each input. Within this function `adaptive_encoder.encode` takes place, which repeatedly divides 32 bit integers, sending each bit to `file_writer.send` to write on the output file.
 
 
 
@@ -161,7 +163,7 @@ Here are some further discussion on individual compression algorithms:
 
 Since Tunstall code compresses text by expanding trees successively, and the end code has to fit within 1 byte=8 bit, it is more efficient when the number of symbols is small. (Since more expansion is possible) Tunstall doesn’t perform well with xmlby or englishby where the alphabet size is over 90 or with SD2 where alphabet size is 64. But with SD3 (alphabet size = 16), SD4 (alphabet size = 4) Tunstall produces compression rate equal to or better than that of the built-in compressors.
 
-Assuming p is the probability that a zero takes place, either a small or large p is preferable for effective compression. When p is near 0.5, meaning uniform distribution, almost no compression takes place. Sometimes the compressed files even get bigger. For example, the average bit rate from page 22 of lecture 5 computes up to 1.53 using p=0.5. Large p is needed for large m, and compression takes place only then. 
+Assuming p is the probability that a zero takes place, either a small or large p is preferable for effective compression. When p is near 0.5, meaning uniform distribution, almost no compression takes place. Sometimes the compressed files even get bigger. For example, the average bit rate from page 22 of lecture 5 computes up to 1.53 using p=0.5. Large p is needed for large m, and compression takes place only then.
 
 Arithmetic coding works best with data with biased distribution and suffers from high number of symbols since the intervals divide into too tiny sections. Arithmetic shows better performance than the built-in compressors with dnaby, SD3 and SD4 where the alphabet size is small, but not with enlishby and xmlby (alphabet size > 90).
 
