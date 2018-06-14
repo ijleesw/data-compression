@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 	c_numofsymbols = symbol_counter(compressed);
 	c_actual_length = c_length * ceil_log2(c_numofsymbols) / 8;
 
-	ratio = (double)o_length/c_length;
+	ratio = (double)c_length/o_length;
 
 	if (!skip){
 		if (!readbyte2buf(argv[4], decompressed, &d_length)) {
@@ -70,8 +70,8 @@ int main(int argc, char** argv)
 	}
 
 	if (is_same) {
-		printf("%ld(%ld) -> %ld(%ld) [%.5f:1 (%.5f:1)]\n",
-			    o_length, o_actual_length, c_length, c_actual_length, ratio, (double)o_actual_length/c_actual_length);
+		printf("%ld(%ld) -> %ld(%ld)   Ratio: %.3f%% (%.3f%%)]\n",
+			    o_length, o_actual_length, c_length, c_actual_length, 100*ratio, (double)100*c_actual_length/o_actual_length);
 	}
 	else cout << "decompressed file not identical to the original file.\n";
 
@@ -88,6 +88,11 @@ int symbol_counter(uchar* buf)
 	set<uchar> s;
 	int cnt = 0;
 	while (buf[cnt] != '\0') s.insert(buf[cnt++]);
+/*
+	cout << endl;
+	for (auto &iter: s) cout << (int)iter << " ";
+	cout << endl;
+*/
 	return s.size();
 }
 
