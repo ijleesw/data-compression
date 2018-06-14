@@ -1,6 +1,6 @@
 # Data Compression Class Project
 
-This is a report for the Data Compression Class Project from the Topics on Algorithms Spring 2018 Class by Seok Won Lee and Chae Min Ahn.
+This is a report for the Data Compression Class Project from the Topics on Algorithms Spring 2018 Class by **Seok Won Lee** and **Chae Min Ahn**.
 
 Repository: <https://github.com/ijleesw/data-compression>
 
