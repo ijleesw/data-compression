@@ -8,7 +8,7 @@ This is a team project of Topics on Algorithms (Data Compression) Spring 2018
 
 Run `test.sh` in terminal.
 
-If malloc error occurs in tunstall, just run `test.sh` again.
+If malloc error occurs in tunstall, run `tunstall.sh`.
 
 
 

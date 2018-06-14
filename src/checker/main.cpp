@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <string.h>
 #include <set>
+#include <cassert>
 #include "readfile.hpp"
 typedef unsigned char uchar;
 using namespace std;
@@ -70,9 +71,14 @@ int main(int argc, char** argv)
 	}
 
 	if (is_same) {
-		printf("%ld(%ld, %d) -> %ld(%ld, %d)   Ratio: %.3f%% (%.3f%%)]\n",
+		printf("%ld(%ld, %d) -> %ld(%ld, %d)   Ratio: %.3f%% (%.3f%%)\n",
 			    o_length, o_actual_length, o_numofsymbols, c_length, c_actual_length, c_numofsymbols,
 			    100*ratio, (double)100*c_actual_length/o_actual_length);
+	/*
+		printf("%ld(%ld) -> %ld   Ratio: %.3f%% (%.3f%%)\n",
+			    o_length, o_actual_length, c_length,
+			    100*ratio, (double)100*c_length/o_actual_length);	
+	*/
 	}
 	else cout << "decompressed file not identical to the original file.\n";
 
@@ -97,22 +103,24 @@ int symbol_counter(uchar* buf, int length)
 	return s.size();
 }
 
-int ceil_log2(int n) {
-  int last = -1, secondlast = -1, count = 0;
-  int log2_n, tmp = n;
+int ceil_log2(int n)
+{
+	assert (n >= 1);
+	int last = -1, secondlast = -1, count = 0;
+	int log2_n, tmp = n;
 
-  while (tmp) {
-    if (tmp & 1) {
-      secondlast = last;
-      last = count;
-    }
-    tmp >>= 1;
-    ++count;
-  }
-  if (secondlast == -1)
-    log2_n = last;
-  else
-    log2_n = last+1;
+	while (tmp) {
+	if (tmp & 1) {
+		secondlast = last;
+		last = count;
+	}
+	tmp >>= 1;
+	++count;
+	}
+	if (secondlast == -1)
+		log2_n = last;
+	else
+		log2_n = last+1;
 
-  return log2_n;
+	return log2_n;
 }
