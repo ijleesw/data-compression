@@ -7,6 +7,7 @@
 typedef unsigned char uchar;
 using namespace std;
 
+int ceil_log2(int);
 int symbol_counter(uchar*);
 
 int main(int argc, char** argv)
@@ -16,8 +17,8 @@ int main(int argc, char** argv)
 	uchar* decompressed;
 	int o_numofsymbols;
 	int c_numofsymbols;
-	long o_length;
-	long c_length;
+	long o_length, o_actual_length;
+	long c_length, c_actual_length;
 	long d_length;
 	double ratio;
 	bool is_same = true;
@@ -44,7 +45,9 @@ int main(int argc, char** argv)
 	}
 
 	o_numofsymbols = symbol_counter(original);
+	o_actual_length = o_length * ceil_log2(o_numofsymbols) / 8;
 	c_numofsymbols = symbol_counter(compressed);
+	c_actual_length = c_length * ceil_log2(c_numofsymbols) / 8;
 
 	ratio = (double)o_length/c_length;
 
@@ -67,7 +70,8 @@ int main(int argc, char** argv)
 	}
 
 	if (is_same) {
-		printf("%d(%d) -> %d(%d) (%.5f:1)\n", (int)o_length, o_numofsymbols, (int)c_length, c_numofsymbols, ratio);
+		printf("%ld(%ld) -> %ld(%ld) [%.5f:1 (%.5f:1)]\n",
+			    o_length, o_actual_length, c_length, c_actual_length, ratio, (double)o_actual_length/c_actual_length);
 	}
 	else cout << "decompressed file not identical to the original file.\n";
 
@@ -85,4 +89,24 @@ int symbol_counter(uchar* buf)
 	int cnt = 0;
 	while (buf[cnt] != '\0') s.insert(buf[cnt++]);
 	return s.size();
+}
+
+int ceil_log2(int n) {
+  int last = -1, secondlast = -1, count = 0;
+  int log2_n, tmp = n;
+
+  while (tmp) {
+    if (tmp & 1) {
+      secondlast = last;
+      last = count;
+    }
+    tmp >>= 1;
+    ++count;
+  }
+  if (secondlast == -1)
+    log2_n = last;
+  else
+    log2_n = last+1;
+
+  return log2_n;
 }
