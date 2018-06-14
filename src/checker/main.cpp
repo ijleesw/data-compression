@@ -8,7 +8,7 @@ typedef unsigned char uchar;
 using namespace std;
 
 int ceil_log2(int);
-int symbol_counter(uchar*);
+int symbol_counter(uchar*, int);
 
 int main(int argc, char** argv)
 {
@@ -44,9 +44,9 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	o_numofsymbols = symbol_counter(original);
+	o_numofsymbols = symbol_counter(original, o_length);
 	o_actual_length = o_length * ceil_log2(o_numofsymbols) / 8;
-	c_numofsymbols = symbol_counter(compressed);
+	c_numofsymbols = symbol_counter(compressed, c_length);
 	c_actual_length = c_length * ceil_log2(c_numofsymbols) / 8;
 
 	ratio = (double)c_length/o_length;
@@ -84,11 +84,11 @@ int main(int argc, char** argv)
 	return 0;
 }
 
-int symbol_counter(uchar* buf)
+int symbol_counter(uchar* buf, int length)
 {
 	set<uchar> s;
 	int cnt = 0;
-	while (buf[cnt] != '\0') s.insert(buf[cnt++]);
+	while (cnt < length) s.insert(buf[cnt++]);
 /*
 	cout << endl;
 	for (auto &iter: s) cout << (int)iter << " ";
